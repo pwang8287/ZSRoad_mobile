@@ -1,7 +1,7 @@
 .revenue-detail-app .header{height:90px}
 .revenue-detail-app .header-title h1{display:none}
 .revenue-detail-app .revenue-back{position:absolute;left:8px;top:50%;display:flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0;padding:0;border:0;background:transparent;color:transparent;transform:translateY(-50%);cursor:pointer}
-.revenue-detail-app .revenue-back span{display:block;width:10px;height:18px;color:transparent;font-size:0;line-height:0;background:url('/assets/figma-route-back.svg') center/contain no-repeat;filter:brightness(0) invert(1)}
+.revenue-detail-app .revenue-back span{display:block;width:10px;height:18px;color:transparent;font-size:0;line-height:0;background:url('/ZSRoad_mobile/assets/figma-route-back.svg') center/contain no-repeat;filter:brightness(0) invert(1)}
 .revenue-detail-app .header::before{height:90px;border-radius:0 0 50% 50% / 0 0 28px 28px}
 .revenue-detail-app main{position:relative;z-index:2;background:#fff}
 .revenue-detail-app .filters,.revenue-detail-app .bottom-nav{display:none}
@@ -43,9 +43,9 @@
 .revenue-detail-table-row>span.green::after{content:' ▼';font-size:10px;line-height:1;vertical-align:middle}
 .revenue-detail-table-row>a{background-color:#fff}
 .revenue-detail-table-row:nth-child(odd)>a{background-color:var(--surface-page)}
-.revenue-detail-ranking .revenue-detail-table-row:nth-child(2)::before{background:url('/assets/figma-rank-first.svg') center/19px 19px no-repeat;color:transparent}
-.revenue-detail-ranking .revenue-detail-table-row:nth-child(3)::before{background:url('/assets/figma-rank-second.svg') center/19px 19px no-repeat;color:transparent}
-.revenue-detail-ranking .revenue-detail-table-row:nth-child(4)::before{background:url('/assets/figma-rank-third.svg') center/19px 19px no-repeat;color:transparent}
+.revenue-detail-ranking .revenue-detail-table-row:nth-child(2)::before{background:url('/ZSRoad_mobile/assets/figma-rank-first.svg') center/19px 19px no-repeat;color:transparent}
+.revenue-detail-ranking .revenue-detail-table-row:nth-child(3)::before{background:url('/ZSRoad_mobile/assets/figma-rank-second.svg') center/19px 19px no-repeat;color:transparent}
+.revenue-detail-ranking .revenue-detail-table-row:nth-child(4)::before{background:url('/ZSRoad_mobile/assets/figma-rank-third.svg') center/19px 19px no-repeat;color:transparent}
 .revenue-detail-ranking .revenue-detail-table-row:nth-child(2)::before,
 .revenue-detail-ranking .revenue-detail-table-row:nth-child(3)::before,
 .revenue-detail-ranking .revenue-detail-table-row:nth-child(4)::before{color:#fff!important;background-color:#fff}

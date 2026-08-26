@@ -13,14 +13,14 @@ export function FilterBar({ organization, organizationOpen, onOrganizationOpen, 
 }
 
 export function RouteStatusBar() {
-  return <div className="route-status-bar" aria-label="手机状态栏"><img className="route-status-time" src="/assets/figma-route-time.svg" alt="12:00" /><div className="route-status-icons"><img className="route-status-mobile" src="/assets/figma-route-mobile-signal.svg" alt="" /><img className="route-status-wifi" src="/assets/figma-route-wifi.svg" alt="" /><span className="route-status-battery"><img src="/assets/figma-route-battery-outline.svg" alt="" /><img src="/assets/figma-route-battery.svg" alt="" /></span></div></div>
+  return <div className="route-status-bar" aria-label="手机状态栏"><img className="route-status-time" src="/ZSRoad_mobile/assets/figma-route-time.svg" alt="12:00" /><div className="route-status-icons"><img className="route-status-mobile" src="/ZSRoad_mobile/assets/figma-route-mobile-signal.svg" alt="" /><img className="route-status-wifi" src="/ZSRoad_mobile/assets/figma-route-wifi.svg" alt="" /><span className="route-status-battery"><img src="/ZSRoad_mobile/assets/figma-route-battery-outline.svg" alt="" /><img src="/ZSRoad_mobile/assets/figma-route-battery.svg" alt="" /></span></div></div>
 }
 
 export function OrganizationPopup({ visible, value, options, onChange, onClose }) {
   return <Popup visible={visible} position="bottom" bodyClassName="organization-popup-body" onMaskClick={onClose} onClose={onClose}>
     <section className="organization-sheet" role="dialog" aria-label="组织选择">
-      <div className="organization-sheet-header"><h2>组织</h2><button type="button" aria-label="关闭组织选择" onClick={onClose}><img src="/assets/figma-organization-close.svg" alt="" /></button></div>
-      <div className="organization-list">{options.map(name => <button type="button" className="organization-option" key={name} onClick={() => { onChange(name); onClose() }}><span>{name}</span>{value === name && <img src="/assets/figma-organization-selected.svg" alt="" />}</button>)}</div>
+      <div className="organization-sheet-header"><h2>组织</h2><button type="button" aria-label="关闭组织选择" onClick={onClose}><img src="/ZSRoad_mobile/assets/figma-organization-close.svg" alt="" /></button></div>
+      <div className="organization-list">{options.map(name => <button type="button" className="organization-option" key={name} onClick={() => { onChange(name); onClose() }}><span>{name}</span>{value === name && <img src="/ZSRoad_mobile/assets/figma-organization-selected.svg" alt="" />}</button>)}</div>
     </section>
   </Popup>
 }
@@ -28,8 +28,8 @@ export function OrganizationPopup({ visible, value, options, onChange, onClose }
 export function FactorPopup({ visible, value, options, onChange, onClose }) {
   return <Popup visible={visible} position="bottom" bodyClassName="organization-popup-body" onMaskClick={onClose} onClose={onClose}>
     <section className="organization-sheet factor-sheet" role="dialog" aria-label="影响因素选择">
-      <div className="organization-sheet-header"><h2>影响因素</h2><button type="button" aria-label="关闭影响因素选择" onClick={onClose}><img src="/assets/figma-organization-close.svg" alt="" /></button></div>
-      <div className="organization-list">{options.map(name => <button type="button" className="organization-option" key={name} onClick={() => { onChange(name); onClose() }}><span>{name}</span>{value === name && <img src="/assets/figma-organization-selected.svg" alt="" />}</button>)}</div>
+      <div className="organization-sheet-header"><h2>影响因素</h2><button type="button" aria-label="关闭影响因素选择" onClick={onClose}><img src="/ZSRoad_mobile/assets/figma-organization-close.svg" alt="" /></button></div>
+      <div className="organization-list">{options.map(name => <button type="button" className="organization-option" key={name} onClick={() => { onChange(name); onClose() }}><span>{name}</span>{value === name && <img src="/ZSRoad_mobile/assets/figma-organization-selected.svg" alt="" />}</button>)}</div>
     </section>
   </Popup>
 }
@@ -48,9 +48,9 @@ export function MonthPickerPopup({ visible, draft, years, visibleMonths, onChang
 }
 
 const rankIcons = [
-  '/assets/figma-rank-first.svg',
-  '/assets/figma-rank-second.svg',
-  '/assets/figma-rank-third.svg'
+  '/ZSRoad_mobile/assets/figma-rank-first.svg',
+  '/ZSRoad_mobile/assets/figma-rank-second.svg',
+  '/ZSRoad_mobile/assets/figma-rank-third.svg'
 ]
 
 export function RankingTable({ rows, sort, onSort, period, onPeriodChange, formatNumber, title = '各公司利润排名', valueLabel, showPeriod, detailColumns }) {
@@ -149,10 +149,10 @@ export function CostPage({ rows, sort, onSort, period, onPeriodChange, formatNum
   return <div className={`cost-page `}><div className="cost-meta"><span>单位：<b>万元</b></span><span>数据更新时间：<em>2026-04-01</em></span><div className="switch cost-period-switch"><button type="button" className={period === '月' ? 'on' : ''} onClick={() => onPeriodChange('月')}>当月</button><button type="button" className={period === '年' ? 'on' : ''} onClick={() => onPeriodChange('年')}>年累计</button></div></div>{trendSection}<section className={`cost-section cost-composition-section ${selectedCost ? 'is-detail' : ''}`}><Heading title="经营成本构成" unit={false}>{selectedCost && <button type="button" className="cost-composition-back" onClick={() => setSelectedCost(null)}>‹ 返回</button>}</Heading><div className="cost-composition"><div className="cost-donut" style={donutStyle}><strong>{compositionTotal}<small>万元</small></strong></div><div className="cost-legend"><div className="cost-legend-head"><span>科目</span><span>成本金额</span><span>占比</span><span>同比</span></div>{compositionItems.map(([name, value, ratio, yoy], index) => <button type="button" className="cost-legend-row" key={name} onClick={() => !selectedCost && name === '道路养护费用' && setSelectedCost(name)}><i className={`cost-dot cost-dot-${index + 1}`}/><span>{name}</span><b>{value}</b><small>{ratio}</small><ChangeValue value={yoy}/></button>)}</div></div></section><section className="cost-section"><Heading title="项目公司成本对比" unit={false}/><ECompanyBars period={period === '年' ? '年累计' : '当月'}/></section><section className="cost-section"><Heading title="项目公司成本构成分析" unit={false}/><ECompanyBars composition period={period === '年' ? '年累计' : '当月'}/></section><section className="cost-section cost-detail-section"><Heading title="成本构成明细" unit={false}><div className="cost-detail-category-switch"><button type="button" aria-label="上一个科目" disabled={detailCategoryIndex === 0} onClick={() => setDetailCategoryIndex(index => Math.max(0, index - 1))}>◀</button><span>{detailCategory}</span><button type="button" aria-label="下一个科目" disabled={detailCategoryIndex === detailCategories.length - 1} onClick={() => setDetailCategoryIndex(index => Math.min(detailCategories.length - 1, index + 1))}>▶</button></div></Heading><ECostDetailBars category={detailCategory}/><div className="cost-detail-table"><div className="cost-detail-head"><span>科目</span><span>成本金额</span><span>占比</span><span>同比</span></div>{detailPrimaryItems.map(([name, value, ratio, yoy]) => <React.Fragment key={name}><div className={`cost-detail-row cost-detail-primary ${expandedDetails[name] ? 'expanded' : ''}`}><button type="button" onClick={() => toggleDetail(name)}><span>{expandedDetails[name] ? '⌄' : '›'}</span>{name}</button><span>{value}</span><span>{ratio}</span><ChangeValue value={yoy}/></div>{expandedDetails[name] && (detailSubItems[name] || []).map(([subName, subValue, subRatio, subYoy]) => <div className="cost-detail-row cost-detail-sub" key={`${name}-${subName}`}><span>{subName}</span><span>{subValue}</span><span>{subRatio}</span><ChangeValue value={subYoy}/></div>)}</React.Fragment>)}</div></section><RankingTable rows={rows} title="各项目公司经营成本排名" sort={sort} onSort={onSort} period={period} onPeriodChange={onPeriodChange} formatNumber={formatNumber}/></div>
 }
 
-const sortDownAsset = '/assets/figma-sort-down-default.svg'
-const sortDownActiveAsset = '/assets/figma-sort-down-active.svg'
-const sortUpAsset = '/assets/figma-sort-up-default.svg'
-const sortUpActiveAsset = '/assets/figma-sort-up-active.svg'
+const sortDownAsset = '/ZSRoad_mobile/assets/figma-sort-down-default.svg'
+const sortDownActiveAsset = '/ZSRoad_mobile/assets/figma-sort-down-active.svg'
+const sortUpAsset = '/ZSRoad_mobile/assets/figma-sort-up-default.svg'
+const sortUpActiveAsset = '/ZSRoad_mobile/assets/figma-sort-up-active.svg'
 
 export function SortIcon({ active, direction }) {
   return <span className="sort-icon"><img src={active && direction === 'asc' ? sortUpActiveAsset : sortUpAsset} className="sort-up" alt=""/><img src={active && direction === 'desc' ? sortDownActiveAsset : sortDownAsset} className="sort-down" alt=""/></span>
