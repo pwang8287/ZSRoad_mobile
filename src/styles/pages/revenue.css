@@ -1,0 +1,44 @@
+.revenue-page{padding:8px;background:#fff;color:var(--text-primary)}
+.revenue-app .header-title h1{font-family:'Source Han Sans CN','Source Han Sans SC','PingFang SC',-apple-system,BlinkMacSystemFont,'Microsoft YaHei',sans-serif;font-size:18px;font-weight:600}
+.revenue-page>.revenue-meta{height:24px;display:flex;align-items:center;justify-content:space-between;padding:0 4px;color:var(--text-tertiary);font-size:12px}
+.revenue-page>.revenue-meta b{color:var(--text-primary);font-weight:400}
+.revenue-page>.revenue-meta em{color:var(--brand-primary);font-style:normal}
+.revenue-section{margin:0 0 12px;padding:8px;background:#fff}
+.revenue-summary{display:flex;align-items:center;min-height:190px;padding:16px 18px;justify-content:space-between;gap:16px}
+.revenue-legend .change-label{color:#6c6c6c!important}
+.revenue-summary.warm{background:linear-gradient(135deg,#fff 0%,#fff0dc 100%)}
+.revenue-summary:not(.warm){background:linear-gradient(135deg,#e8f3ff 0%,#f7fbff 100%)}
+.donut{position:relative;display:flex;flex:0 0 138px;flex-direction:column;align-items:center;justify-content:center;width:138px;height:138px;border-radius:50%;background:conic-gradient(#036cff 0 40%,#0fdbaa 40% 100%)}
+.donut::after{content:"";position:absolute;inset:18px;border-radius:50%;background:#fff}
+.donut strong,.donut em{position:relative;z-index:1;font-style:normal}
+.donut strong{font-size:16px;color:#555}.donut strong small{display:block;text-align:center;font-size:10px;font-weight:400}.donut em{font-size:10px;color:#f2352b}.donut-orange{background:conic-gradient(#fac905 0 42%,#ffa174 42% 100%)}
+.revenue-legend{flex:1;min-width:0}.revenue-legend p{display:grid;grid-template-columns:14px minmax(42px,1fr) auto auto;align-items:baseline;column-gap:6px;margin:12px 0;color:#555;font-size:13px;white-space:nowrap}.revenue-legend p .dot{grid-column:1;width:12px;height:12px;margin:0}.revenue-legend p span{grid-column:2}.revenue-legend p b{grid-column:3;margin:0;color:#4d4d4d;font-size:18px;font-weight:600}.revenue-legend p small{grid-column:4;color:var(--text-primary);font-size:12px}.revenue-legend p em{grid-column:3 / -1;display:flex;align-items:center;justify-content:space-between;width:100%;margin:3px 0 0;font-size:12px;font-style:normal;line-height:18px;text-align:right}
+.revenue-legend p .dot{display:block;align-self:center;border-radius:50%;background:#036cff}.revenue-legend p .dot.teal{background:#0fdbaa}.revenue-legend p .dot.orange{background:#fac905}.revenue-legend p .dot.amber{background:#ffa174}
+.revenue-legend p{align-items:center}
+.revenue-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.revenue-cards>div{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;column-gap:0;padding:16px 4px 14px;background:linear-gradient(135deg,#fff,#e9f6ff);font-size:11px;text-align:left}.revenue-cards>div span{grid-column:1;min-width:0;white-space:nowrap;line-height:20px;font-size:10px}.revenue-cards>div b{grid-column:2;font-size:18px;line-height:28px;text-align:right;white-space:nowrap}.revenue-cards>div small{grid-column:2;display:block;margin:0;color:#888;font-size:13px;text-align:right}.revenue-cards>div p{grid-column:1 / -1;margin:14px 0 0;text-align:right;font-size:13px;color:#1a1a1a;white-space:nowrap}.revenue-cards em{font-style:normal}.revenue-cards p em{color:#f2352b}
+.revenue-more{display:block;width:100%;margin:0;padding:8px;border:0;background:transparent;color:var(--brand-primary);font:inherit;font-size:12px;line-height:20px;text-align:right}
+.revenue-page>.factors{margin-bottom:16px}.revenue-page>.ranking{padding:8px 4px}.revenue-page>.ranking>.heading{padding-left:0}
+.is-project-company .revenue-page>.revenue-section:nth-of-type(2) .revenue-more,
+.is-project-company .revenue-page>.ranking{display:none}
+.revenue-section,.revenue-summary,.revenue-cards>div{border-radius:8px}
+.revenue-cards>div{background:linear-gradient(135deg,#e8f3ff 0%,#f7fbff 100%)}
+.revenue-cards>div span{grid-column:1 / -1;font-size:12px}
+.revenue-cards>div b{grid-column:1;text-align:right}
+.revenue-cards>div small{grid-column:2;text-align:left}
+.revenue-cards>div p{color:#6c6c6c}
+.revenue-cards>div p,.revenue-cards>div p em{font-size:12px}
+.revenue-cards>div{padding-left:9px;padding-right:9px}
+
+/* Revenue page-owned final rules. */
+.revenue-page .revenue-section{border-radius:8px}
+.revenue-page .revenue-summary{border-radius:8px}
+.revenue-page .revenue-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.revenue-page .revenue-cards>div{border-radius:8px}
+.revenue-page .factor-table{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.revenue-page .factor-row>a{position:sticky;left:0;z-index:5}
+.revenue-page .revenue-more{display:block}
+.factor-table{overflow-x:auto;font-size:12px;scrollbar-width:none}.factor-table::-webkit-scrollbar{display:none}.factor-head,.factor-row{display:grid;grid-template-columns:112px repeat(12,52px);min-width:736px;align-items:center;height:30px}.factor-head{background:#dff1ff;color:var(--brand-primary);font-weight:600}.factor-head span,.factor-row>*{padding:4px;text-align:center}.factor-head>span:first-child,.factor-row>a{position:sticky;left:0;z-index:3;background:inherit}.factor-row>a{color:#1a1a1a!important;text-align:left;white-space:nowrap}.factor-hint{color:#777;font-size:10px}
+.factor-row{background:#fff!important}
+.factor-row:nth-child(odd){background:#fafafa!important}
+.factor-row>a{width:112px;min-width:112px;max-width:112px;box-sizing:border-box;background:#fff!important;z-index:5}
+.factor-row:nth-child(odd)>a{background:#fafafa!important}

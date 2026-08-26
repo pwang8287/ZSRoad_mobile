@@ -1,0 +1,6 @@
+.filters{height:37px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:0;padding:8px 10px;transform:translateY(-2px)}
+.filters button{display:flex;align-items:center;gap:4px;padding:0;border:0;background:transparent;color:#fff;font-size:14px}
+.filters button{justify-self:center}
+.switch{display:inline-flex;vertical-align:middle;height:27px;overflow:hidden;border:1px solid var(--brand-primary);border-radius:4px}
+.switch button{height:25px;width:35px;padding:0;border:0;background:#fff;color:var(--brand-primary);font-size:14px}
+.switch button.on{background:var(--brand-primary);color:#fff}

@@ -1,0 +1,8 @@
+.organization-popup-body{width:min(100%,430px)!important;margin:0 auto;background:transparent!important;border-radius:10px 10px 0 0;overflow:hidden}
+.organization-backdrop,.time-backdrop{z-index:var(--z-popup)}
+.organization-sheet{width:min(100%,430px);height:min(404px,calc(100vh - 24px));display:flex;flex-direction:column;gap:24px;padding:15px;background:#fff;border-radius:10px 10px 0 0;color:var(--text-primary)}
+.organization-sheet-header{display:flex;align-items:center;justify-content:space-between;min-height:26px}
+.organization-sheet-header h2{margin:0;font-size:16px;line-height:26px;font-weight:500}
+.organization-list{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none}
+.organization-list::-webkit-scrollbar{display:none}
+.organization-option{position:relative;display:flex;align-items:center;justify-content:space-between;width:100%;min-height:40px;padding:8px 14px 8px 0;border:0;background:#fff;color:var(--text-primary);font-size:16px;line-height:24px;text-align:left}

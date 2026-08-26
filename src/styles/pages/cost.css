@@ -1,0 +1,100 @@
+.cost-page{padding:8px;color:var(--text-primary);background:#fff}
+.is-project-company .cost-page>.cost-section:nth-of-type(3),
+.is-project-company .cost-page>.cost-section:nth-of-type(4),
+.is-project-company .cost-page>.ranking{display:none}
+.cost-app .header-title h1{font-family:'Source Han Sans CN','Source Han Sans SC','PingFang SC',-apple-system,BlinkMacSystemFont,'Microsoft YaHei',sans-serif;font-size:18px;font-weight:600}
+.cost-meta{height:24px;display:flex;align-items:center;justify-content:space-between;padding:0 4px;color:#777;font-size:12px}
+.cost-meta b{color:var(--text-primary);font-weight:400}.cost-meta em{color:var(--brand-primary);font-style:normal}
+.cost-meta>span:nth-child(2){margin-left:auto;margin-right:10px}.cost-meta>.cost-period-switch{margin-left:0;height:27px}.cost-period-switch button{width:44px!important;height:25px;padding:0;font-size:12px!important;line-height:25px;white-space:nowrap}
+.cost-section{margin-bottom:18px;padding:8px 4px 0}.cost-section .heading{margin-bottom:8px}
+.cost-composition{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:12px 0}.cost-composition .cost-donut{align-self:center}
+.cost-donut{position:relative;display:flex;align-items:center;justify-content:center;width:178px;height:178px;flex:0 0 178px;border-radius:50%;background:conic-gradient(#4e80e8 0 14%,#61bac0 14% 32%,#55a965 32% 52%,#f8d28e 52% 82%,#f29b38 82% 100%)}
+.cost-donut::after{content:"";position:absolute;inset:28px;border-radius:50%;background:#fff}.cost-donut strong{position:relative;z-index:1;color:#4d4d4d;text-align:center;font-size:15px}.cost-donut small{display:block;margin-top:4px;font-size:11px;font-weight:400}
+.cost-composition-section .cost-donut strong{display:block;text-align:center}.cost-composition-section .cost-donut strong::before{content:'经营成本';display:block;margin-bottom:4px;color:#666;font-size:13px;font-weight:500}.cost-composition-section.is-detail .cost-donut strong::before{content:'道路养护费用'}
+.cost-legend{width:100%;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}.cost-legend::-webkit-scrollbar{display:none}
+.cost-legend-head,.cost-legend-row{display:grid;grid-template-columns:112px 92px 58px 72px;align-items:center;min-width:390px}
+.cost-legend-head{height:34px;color:#777;font-size:13px}.cost-legend-head span,.cost-legend-row>*{padding:4px;text-align:right;white-space:nowrap}.cost-legend-head span:first-child,.cost-legend-row span:nth-child(2){text-align:left}
+.cost-legend-row{position:relative;min-height:38px;border:0;background:transparent;font-size:13px;color:var(--text-primary)}.cost-legend-row .cost-dot{position:absolute;left:4px;top:50%;width:10px;height:10px;transform:translateY(-50%);border-radius:2px;background:#4e80e8}.cost-legend-row .cost-dot-2{background:#61bac0}.cost-legend-row .cost-dot-3{background:#55a965}.cost-legend-row .cost-dot-4{background:#f29b38}.cost-legend-row>span:nth-child(2){grid-column:1;padding-left:18px}.cost-legend-row>b{grid-column:2}.cost-legend-row>small{grid-column:3}.cost-legend-row>.red,.cost-legend-row>.green{grid-column:4;background:transparent!important}
+.cost-composition-section .cost-legend{width:350px;min-width:350px;max-width:100%;margin-left:auto;margin-right:auto}.cost-composition-section .cost-legend-head,.cost-composition-section .cost-legend-row{min-width:350px}.cost-composition-section .cost-legend-head span:first-child{visibility:hidden}.cost-composition-section .cost-legend-head span:nth-child(2),.cost-composition-section .cost-legend-row>b{justify-self:center;text-align:center}.cost-composition-section .cost-legend-head span:nth-child(3),.cost-composition-section .cost-legend-head span:nth-child(4),.cost-composition-section .cost-legend-row>small,.cost-composition-section .cost-legend-row>.red,.cost-composition-section .cost-legend-row>.green{justify-self:center;text-align:center}
+.cost-composition-section .cost-dot-1{background:#036cff}.cost-composition-section .cost-dot-2{background:#0fdbaa}.cost-composition-section .cost-dot-3{background:#55a965}.cost-composition-section .cost-dot-4{background:#fac905}.cost-composition-section .cost-dot-5{background:#ffa174}.cost-composition-section .cost-dot-6{background:#f56c7d}
+.cost-composition-section:not(.is-detail) .cost-legend-row span:nth-child(2){color:#036cff}
+.cost-composition-section .cost-legend-row>.red,.cost-composition-section .cost-legend-row>.green{background:transparent!important}
+.cost-composition-section .cost-legend-row .change-arrow{background:transparent!important;color:inherit;border:0;padding:0;box-shadow:none}
+.cost-composition-section .heading-main{position:relative}
+.cost-composition-back{position:absolute;right:0;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;height:24px;padding:0;border:0;background:transparent;color:var(--brand-primary);font-size:14px;font-weight:500;line-height:24px;white-space:nowrap;cursor:pointer}
+.cost-composition-section.is-detail .cost-legend-row>span:nth-child(2){padding-left:18px}
+.cost-detail-section{margin-top:4px}.cost-detail-category-switch{display:inline-flex;align-items:center;gap:6px;color:var(--brand-primary)}.cost-detail-category-switch button{width:16px;height:24px;padding:0;color:var(--brand-primary);font-size:10px}.cost-detail-category-switch span{min-width:100px;text-align:center;font-size:13px}
+.cost-detail-table{
+  width:100%;
+  overflow:hidden;
+  margin-top:15px;
+  font-size:12px;
+  color:var(--text-primary);
+}
+.cost-detail-head,
+.cost-detail-row{
+  display:grid;
+  grid-template-columns:minmax(112px,1.4fr) minmax(82px,1fr) minmax(58px,.7fr) minmax(70px,.8fr);
+  align-items:center;
+  min-height:30px;
+}
+.cost-detail-head{
+  height:32px;
+  min-height:32px;
+  background:#dff1ff;
+  color:var(--brand-primary);
+  font-weight:600;
+  visibility:visible!important;
+  opacity:1!important;
+}
+.cost-detail-head span{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  min-width:0;
+  padding:5px 4px;
+  text-align:center;
+  white-space:nowrap;
+  line-height:20px;
+  color:#1a1a1a!important;
+}
+.cost-detail-head span:first-child{ text-align:center; }
+.cost-detail-row{
+  background:#fff;
+  border:0;
+}
+.cost-detail-row:nth-child(odd){background:#fafafa}
+.cost-detail-row>*{
+  min-width:0;
+  padding:5px 4px;
+  text-align:center;
+  white-space:nowrap;
+  line-height:20px;
+}
+.cost-detail-row button{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  width:100%;
+  min-width:0;
+  padding:5px 4px;
+  border:0;
+  background:transparent;
+  color:var(--brand-primary);
+  justify-content:flex-start;
+  text-align:left;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.cost-detail-row button span{flex:0 0 10px;text-align:center}
+.cost-detail-sub>span:first-child{padding-left:18px;text-align:left;color:var(--text-primary)}
+.cost-detail-row .change-arrow{font-size:.75em;background:transparent!important}
+
+/* Cost page-owned final rules. */
+.cost-page .cost-meta{display:flex;align-items:center}
+.cost-page .cost-section{margin-bottom:18px}
+.cost-page .cost-composition{display:flex;flex-direction:column;align-items:stretch}
+.cost-page .cost-detail-table{width:100%;overflow:hidden}
+.cost-page .cost-detail-head,
+.cost-page .cost-detail-row{display:grid;align-items:center}

@@ -1,0 +1,37 @@
+/* Overview page surface and module framing. */
+main{position:relative;background:var(--surface-page);padding:5px 0 12px}
+main>section{position:relative;margin:8px 12px 0;padding:8px;background:var(--surface-card);border-radius:var(--radius-md)}
+main>section:first-child{margin-top:0}
+main>.overview{padding:8px}
+.overview-meta{height:22px;display:flex;align-items:center;justify-content:space-between;margin:0 0 4px;padding:0 2px;color:var(--text-tertiary);font-size:12px;line-height:20px}
+.overview-meta b{color:var(--text-primary);font-weight:400}
+.overview-meta .updated{color:var(--brand-primary)}
+.heading{display:flex;flex-direction:column;align-items:stretch;gap:4px;min-height:30px;margin-bottom:8px;border-left:0;padding-left:0}
+.heading-main{height:30px;display:flex;align-items:center;justify-content:space-between;min-width:0}
+.heading-main h2{position:relative;margin:0;padding-left:10px;color:var(--text-primary);font-size:15px;line-height:21px;font-weight:600}
+.heading-main h2::before{content:"";position:absolute;left:0;top:50%;width:2px;height:18px;transform:translateY(-50%);background:var(--brand-primary)}
+.metric-row{display:flex;gap:8px;margin:0 0 13px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none}
+.metric-row::-webkit-scrollbar{display:none}
+.metric-card{display:grid;grid-template-rows:24px 32px 22px;flex:0 0 108px;row-gap:6px;align-content:start;height:103px;padding:12px 6px 0;border-radius:var(--radius-sm);text-align:center;background:linear-gradient(135deg,#e8f3ff 0%,#f7fbff 100%)}
+.year-metric-row .metric-card{background:linear-gradient(135deg,#fff9e8 0%,#fffdf5 100%)}
+.metric-label{display:flex;align-items:center;justify-content:center;height:24px;color:var(--text-secondary);font-size:13px;white-space:nowrap}
+.metric-card strong{display:flex;align-items:center;justify-content:center;height:32px;margin:0;color:var(--text-primary);font-family:'D-DIN','DIN Alternate',sans-serif;font-size:20px;line-height:32px;font-weight:600;white-space:nowrap}
+.metric-card strong small{margin-left:2px;font-size:11px;font-weight:400}
+.metric-card p{display:flex;align-items:center;justify-content:center;height:22px;margin:0;transform:translateY(-2px);color:var(--text-tertiary);font-size:11px;white-space:nowrap}
+.metric-card p{color:#6c6c6c}
+.metric-card{padding-left:11px;padding-right:11px}
+.metric-card p em{display:inline-flex;align-items:center;margin-left:3px;font-style:normal}
+.chart-section{padding:8px}
+.chart-section .heading{margin-bottom:8px}
+.company-chart{padding-top:8px}
+.ranking{padding:8px}
+.is-project-company .overview + .chart-section.company-chart,
+.is-project-company .overview ~ .ranking{display:none}
+.is-project-company .company-chart,
+.is-project-company .overview ~ .ranking{display:none!important}
+
+/* Overview page-owned final rules. */
+.overview-page .overview-meta{height:22px;display:flex;align-items:center;justify-content:space-between;margin:0 0 4px;padding:0 2px}
+.overview-page .metric-row{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none}
+.overview-page .metric-card{flex:0 0 108px;border-radius:var(--radius-sm)}
+.ranking .heading{margin-bottom:9px}

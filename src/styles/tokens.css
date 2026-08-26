@@ -1,0 +1,27 @@
+:root {
+  --brand-primary: #036cff;
+  --brand-primary-dark: #0069e8;
+  --brand-primary-light: #eaf4ff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666;
+  --text-tertiary: #999;
+  --border-default: #e5e5e5;
+  --surface-page: #f5f6f8;
+  --surface-card: #fff;
+  --status-positive: #00b578;
+  --status-warning: #ffb000;
+  --status-negative: #ff3b3b;
+  --chart-teal: #13cdb0;
+  --chart-orange: #ffb400;
+  --chart-purple: #9b8afb;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --z-content: 1;
+  --z-header: 20;
+  --z-sticky-column: 30;
+  --z-popup: 100;
+}
