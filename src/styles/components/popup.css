@@ -1,4 +1,4 @@
-.organization-popup-body{width:min(100%,430px)!important;margin:0 auto;background:transparent!important;border-radius:10px 10px 0 0;overflow:hidden}
+.organization-popup-body{left:50%!important;right:auto!important;width:min(100%,430px)!important;margin:0!important;transform:translateX(-50%)!important;background:transparent!important;border-radius:10px 10px 0 0;overflow:hidden}
 .organization-backdrop,.time-backdrop{z-index:var(--z-popup)}
 .organization-sheet{width:min(100%,430px);height:min(404px,calc(100vh - 24px));display:flex;flex-direction:column;gap:24px;padding:15px;background:#fff;border-radius:10px 10px 0 0;color:var(--text-primary)}
 .organization-sheet-header{display:flex;align-items:center;justify-content:space-between;min-height:26px}

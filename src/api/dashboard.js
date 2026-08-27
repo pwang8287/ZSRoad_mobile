@@ -14,7 +14,7 @@ export function getCompanyComparison(params, options) {
   return request(`/dashboard/company-comparison?${query(params)}`, options)
 }
 
-export function getRanking({ page = 1, pageSize = 20, sortField = 'profit', sortDirection = 'desc', ...params }, options) {
+export function getRanking({ page = 1, pageSize = 20, sortField = 'profit', sortDirection, sortOrder = 'desc', ...params }, options) {
   const safePageSize = Math.min(Math.max(Number(pageSize) || 20, 1), 20)
-  return request(`/dashboard/ranking?${query({ ...params, page, pageSize: safePageSize, sortField, sortDirection })}`, options)
+  return request(`/dashboard/ranking?${query({ ...params, page, pageSize: safePageSize, sortField, sortDirection: sortDirection || sortOrder })}`, options)
 }
