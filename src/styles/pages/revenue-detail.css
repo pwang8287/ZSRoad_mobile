@@ -13,7 +13,7 @@
 .revenue-detail-page .revenue-meta .switch{order:3;height:27px}
 .revenue-detail-chart{margin:8px 0 10px}
 .revenue-detail-chart-heading{display:flex;align-items:center;justify-content:space-between;min-height:30px;margin:0 8px 0 9px}
-.revenue-detail-chart-heading h2{position:relative;flex:1;height:30px;margin:0;padding-left:10px;font-size:15px;line-height:21px}
+.revenue-detail-chart-heading h2{position:relative;display:flex;align-items:center;flex:1;height:30px;margin:0;padding-left:10px;font-size:15px;line-height:21px}
 .revenue-detail-chart-heading h2::before{content:"";position:absolute;left:0;top:50%;width:2px;height:18px;transform:translateY(-50%);background:var(--brand-primary)}
 .factor-category-switch{display:inline-flex;align-items:center;gap:6px;color:var(--brand-primary);white-space:nowrap}
 .factor-category-switch button{width:16px;height:24px;padding:0;color:var(--brand-primary);font-size:10px;line-height:20px}

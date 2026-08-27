@@ -70,6 +70,7 @@ function App() {
   const years = Array.from({ length: Math.max(1, currentMonth.year - 2023 + 1) }, (_, index) => 2023 + index)
   const months = Array.from({ length: 12 }, (_, index) => index + 1)
   const canSelectMonth = (year, month) => year < currentMonth.year || (year === currentMonth.year && month <= currentMonth.month)
+  globalThis.__selectedMonth = selectedMonth
   const visibleMonths = months.filter(month => canSelectMonth(draftMonth.year, month))
   const toggleSort = key => setSort(current => ({ key, direction: current.key === key && current.direction === 'desc' ? 'asc' : 'desc' }))
   const navigateTab = (tab, nextPage) => {

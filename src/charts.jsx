@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import { init, use } from 'echarts/core'
 import { BarChart, LineChart } from 'echarts/charts'
 import { DataZoomComponent, GridComponent, LegendComponent, TooltipComponent } from 'echarts/components'
@@ -18,21 +18,25 @@ function dynamicAxis(values, preferred = 50) {
   return { max: Math.max(step, Math.ceil(max / step) * step), interval: step }
 }
 function dynamicBarWidth(categoryCount, seriesCount, base = 190) { return Math.max(8, Math.min(22, Math.floor(base / Math.max(categoryCount, 1) / Math.max(seriesCount, 1)))) }
-function Chart({ option, height }) {
+function Chart({ option, height, onClick }) {
   const ref = useRef(null)
   const chartRef = useRef(null)
   useEffect(() => {
     if (!ref.current) return undefined
     const chart = init(ref.current)
     chartRef.current = chart
+    if (onClick) chart.on('click', onClick)
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(() => chart.resize()) : null
+    observer?.observe(ref.current)
     const onResize = () => chart.resize()
     window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('resize', onResize)
+      observer?.disconnect()
       chart.dispose()
       chartRef.current = null
     }
-  }, [])
+  }, [onClick])
   useEffect(() => { chartRef.current?.setOption(option, { notMerge: true }) }, [option])
   return <div className="echart" ref={ref} style={{ height }} />
 }
@@ -64,7 +68,7 @@ function ECostTrendView({ period = '当月' } = {}) {
 }
 export const ECostTrend = memo(ECostTrendView)
 
-function ERevenueTrendView({ period = '当月' } = {}) {
+function ERevenueTrendView({ period = '当月', onMonthClick } = {}) {
   const months = ['2025年12月', '2026年1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月']
   const scale = period === '年累计' ? 1.18 : 1
   const option = {
@@ -87,7 +91,12 @@ function ERevenueTrendView({ period = '当月' } = {}) {
       { name: '免费金额(去年)', type: 'line', smooth: true, symbol: 'circle', symbolSize: 5, itemStyle: { color: '#D0D0D0' }, lineStyle: { color: '#D0D0D0', width: 2 }, data: [122, 174, 136, 105, 42, 48, 102, 90, 76, 98, 110, 118].map(value => value * scale) }
     ]
   }
-  return <Chart option={option} height={350} />
+  return <Chart option={option} height={350} onClick={params => {
+    if (params?.componentType === 'series' && Number.isInteger(params.dataIndex)) {
+      const month = Number(String(months[params.dataIndex]).match(/(\d+)月$/)?.[1])
+      onMonthClick?.(month)
+    }
+  }} />
 }
 export const ERevenueTrend = memo(ERevenueTrendView)
 
@@ -106,13 +115,18 @@ function ECompanyBarsView({ data, period = '当月', names: namesProp } = {}) {
 export const ECompanyBars = memo(ECompanyBarsView)
 
 function RevenueAnalysisBars({ title, names, series, unit = '万元', stacked = false, headerRight }) {
-  const axis = dynamicAxis(series.flatMap(item => item.data), 50)
+  // Stacked bars need an axis based on the category totals, otherwise the
+  // combined height can exceed the scale and be visually clipped.
+  const axisValues = stacked
+    ? names.map((_, index) => series.reduce((total, item) => total + Number(item.data[index] || 0), 0))
+    : series.flatMap(item => item.data)
+  const axis = dynamicAxis(axisValues, 50)
   const interval = axis.interval
   const axisMax = axis.max
   const compactWidth = dynamicBarWidth(names.length, series.length)
   const needsScroll = names.length > 6
   if (stacked) series = series.map(item => ({ ...item, color: item.name === '客车流量(去年)' ? '#B8B8B8' : item.name === '货车流量(去年)' ? '#D9D9D9' : item.color }))
-  const option = { animationDuration: 400, grid: { left: 38, right: 8, top: 52, bottom: 96 }, dataZoom: needsScroll ? [{ type: 'inside', xAxisIndex: 0, filterMode: 'none', start: 0, end: 62, zoomOnMouseWheel: false, moveOnMouseMove: true, moveOnMouseWheel: true }] : [], legend: { bottom: 4, left: 'center', itemWidth: 14, itemHeight: 10, itemGap: 12, textStyle: { color: colors.text, fontSize: 11 }, data: series.map(item => item.name) }, tooltip: { ...tooltip, axisPointer: { type: 'shadow' }, valueFormatter: value => `${formatChartNumber(value)} ${unit}` }, xAxis: { type: 'category', data: names, axisLine: { lineStyle: { color: colors.grid } }, axisTick: { show: false }, axisLabel: { color: colors.tertiary, fontSize: 10, rotate: 30, interval: 0 } }, yAxis: { ...commonY, min: 0, max: axisMax, interval, name: unit }, series: series.map((item, index) => ({ name: item.name, stack: stacked ? (item.name.includes('去年') ? 'previous' : 'current') : undefined, type: 'bar', barWidth: compactWidth, barGap: '0%', barCategoryGap: stacked ? '38%' : (series.length > 2 ? '18%' : '28%'), itemStyle: { color: item.color === '#4E86EA' ? colors.primary : item.color || (index ? '#B8B8B8' : colors.primary), borderRadius: stacked && !item.name.includes('货车') ? [0,0,0,0] : [2,2,0,0] }, data: item.data })) }
+  const option = { animationDuration: 400, grid: { left: 38, right: 8, top: 52, bottom: 96 }, dataZoom: needsScroll ? [{ type: 'inside', xAxisIndex: 0, filterMode: 'none', start: 0, end: 62, zoomOnMouseWheel: false, moveOnMouseMove: true, moveOnMouseWheel: true }] : [], legend: { bottom: 4, left: 'center', itemWidth: 14, itemHeight: 10, itemGap: 12, textStyle: { color: colors.text, fontSize: 11 }, data: series.map(item => item.name) }, tooltip: { ...tooltip, axisPointer: { type: 'shadow' }, valueFormatter: value => `${formatChartNumber(value)} ${unit}` }, xAxis: { type: 'category', data: names, axisLine: { lineStyle: { color: colors.grid } }, axisTick: { show: false }, axisLabel: { color: colors.tertiary, fontSize: 10, rotate: 30, interval: 0 } }, yAxis: { ...commonY, min: 0, max: axisMax, interval, name: unit }, series: series.map((item, index) => ({ name: item.name, stack: stacked ? (item.name.includes('去年') ? 'previous' : 'current') : undefined, type: 'bar', barWidth: compactWidth, barGap: '0%', barCategoryGap: stacked ? '38%' : (series.length > 2 ? '18%' : '28%'), itemStyle: { color: item.color === '#4E86EA' || item.color === '#4e86ea' ? colors.primary : item.color === '#61b8c0' ? colors.teal : item.color || (index ? '#B8B8B8' : colors.primary), borderRadius: stacked ? (index === series.length - 1 ? [3,3,0,0] : [0,0,0,0]) : [2,2,0,0] }, data: item.data })) }
   return <section className="revenue-detail-chart"><div className="revenue-detail-chart-heading"><h2>{title}</h2>{headerRight}</div><Chart option={option} height={300} /></section>
 }
 
@@ -122,6 +136,31 @@ const sameRevenueChart = (prev, next) => prev.title === next.title && prev.unit 
 })
 
 export const ERevenueAnalysisBars = memo(RevenueAnalysisBars, sameRevenueChart)
+
+export function EProjectRevenueCharts() {
+  const stationNames = ['桂林七星', '桂林象山', '灵川县道站', '桂林高新', '兴安城南站', '桂林北']
+  const [stationIndex, setStationIndex] = useState(0)
+  const station = stationNames[stationIndex]
+  const line = (title, names, series, { percent = false, unit = '万元', headerRight } = {}) => {
+    const axis = dynamicAxis(series.flatMap(item => item.data), percent ? 5 : 50)
+    const option = {
+      animationDuration: 500,
+      grid: { left: 34, right: 8, top: 38, bottom: 88 },
+      dataZoom: names.length > 6 ? [{ ...dataZoom[0], end: 65 }] : [],
+      legend: { bottom: 4, left: 'center', width: '100%', orient: 'horizontal', itemWidth: 14, itemHeight: 2, itemGap: 7, textStyle: { color: colors.text, fontSize: 11 }, data: series.map(item => item.name) },
+      tooltip: { ...tooltip, valueFormatter: value => `${formatChartNumber(value)} ${unit}` },
+      xAxis: { type: 'category', data: names, boundaryGap: false, axisLine: { lineStyle: { color: colors.grid } }, axisLabel: { color: colors.tertiary, fontSize: 12, rotate: 30, interval: 0 }, axisTick: { show: false } },
+      yAxis: { type: 'value', min: 0, max: axis.max, interval: axis.interval, name: percent ? '' : unit, nameLocation: 'end', nameGap: 8, nameTextStyle: { color: colors.tertiary, fontSize: 12, align: 'right' }, axisLabel: { color: colors.tertiary, fontSize: 12, margin: 8, formatter: value => percent ? `${value}%` : formatAxisNumber(value) }, axisLine: { show: false }, axisTick: { show: false }, splitLine: { lineStyle: { color: colors.grid, type: 'dashed' } } },
+      series: series.map((item, index) => ({ name: item.name, type: 'line', smooth: true, symbol: 'circle', symbolSize: 5, areaStyle: index === 0 ? { color: 'rgba(3,108,255,.05)' } : undefined, lineStyle: { color: item.color, width: 2 }, itemStyle: { color: item.color }, data: item.data }))
+    }
+    return <section className="revenue-detail-chart project-revenue-extra"><div className="revenue-detail-chart-heading"><h2>{title}</h2>{headerRight}</div><Chart option={option} height={335}/></section>
+  }
+  return <>
+    {line('客货比趋势',['1月','2月','3月','4月','5月','6月'],[{name:'客货比',color:colors.primary,data:[10,14,23,10,16,13]},{name:'客货比(去年)',color:'#B8B8B8',data:[15,10,20,14,14,17]}],{ percent: true, unit: '%' })}
+    <ERevenueAnalysisBars title="收费站出入口流量" names={stationNames} stacked series={[{name:'出口流量',data:[100,140,230,100,210,145],color:colors.primary},{name:'入口流量',data:[150,100,200,140,120,200],color:colors.teal}]}/>
+    {line('收费站出入口流量趋势',['1月','2月','3月','4月','5月','6月'],[{name:'客车流量',color:colors.primary,data:[100,140,230,100,130,210].map(value => value * (1 + stationIndex * .04))},{name:'货车流量',color:colors.teal,data:[150,100,200,140,100,225].map(value => value * (1 + stationIndex * .03))},{name:'客车流量(去年)',color:'#858B95',data:[158,122,121,176,122,185]},{name:'货车流量(去年)',color:'#C9CDD4',data:[190,150,110,132,165,152]}],{ unit: '万辆', headerRight: <div className="factor-category-switch project-station-switch"><button type="button" aria-label="上一个收费站" onClick={() => setStationIndex(index => (index - 1 + stationNames.length) % stationNames.length)}>◀</button><span className="factor-category-label">{station}</span><button type="button" aria-label="下一个收费站" onClick={() => setStationIndex(index => (index + 1) % stationNames.length)}>▶</button></div> })}
+  </>
+}
 
 function ECostCompanyBarsView({ period = '当月' } = {}) {
   const names = ['甬台温高速','宁波交通科技','九龙高速','桂林公司','京津塘高速','贵黄高速','鄂东大桥','重庆公司','亳阜高速']
@@ -153,6 +192,19 @@ function ECostCompositionBarsView() {
   return <Chart option={option} height={390} />
 }
 export const ECostCompositionBars = memo(ECostCompositionBarsView)
+
+export const ECostCategoryTrend = memo(function ECostCategoryTrend() {
+  const names = ['1月','2月','3月','4月','5月','6月','7月','8月']
+  const series = [
+    { name: '道路养护费用', color: '#8ecff0', data: [150,100,200,140,100,220,230,210] },
+    { name: '系统维护费用', color: '#55a965', data: [500,420,430,450,390,560,580,540] },
+    { name: '折旧与摊销', color: '#f7be35', data: [680,560,560,575,545,665,680,670] },
+    { name: '其他业务成本', color: '#f07b2d', data: [420,380,460,430,400,500,530,520] }
+  ]
+  const axis = dynamicAxis(series.flatMap(item => item.data), 100)
+  const option = { grid: { left: 38, right: 8, top: 30, bottom: 82 }, legend: { bottom: 4, left: 'center', width: '100%', orient: 'horizontal', itemWidth: 14, itemHeight: 2, itemGap: 6, textStyle: { color: colors.text, fontSize: 10 }, data: series.map(item => item.name) }, tooltip: { ...tooltip, axisPointer: { type: 'line' } }, xAxis: { type: 'category', data: names, axisLine: { lineStyle: { color: colors.grid } }, axisTick: { show: false }, axisLabel: { color: colors.tertiary, fontSize: 11, rotate: 30, interval: 0 } }, yAxis: { type: 'value', min: 0, max: axis.max, interval: axis.interval, name: '万元', nameLocation: 'end', nameGap: 8, nameTextStyle: { color: colors.tertiary, fontSize: 12, align: 'right' }, axisLabel: { color: colors.tertiary, fontSize: 12, margin: 8, formatter: formatAxisNumber }, axisLine: { show: false }, axisTick: { show: false }, splitLine: { lineStyle: { color: colors.grid, type: 'dashed' } } }, series: series.map((item, index) => ({ name: item.name, type: 'line', smooth: true, symbol: 'circle', symbolSize: 5, areaStyle: index === 0 ? { color: 'rgba(3,108,255,.12)' } : undefined, lineStyle: { color: item.color, width: 2 }, itemStyle: { color: item.color }, data: item.data })) }
+  return <Chart option={option} height={320} />
+})
 
 export const ECostDetailBars = memo(function ECostDetailBars({ category = '道路养护费用' } = {}) {
   const categoryData = {

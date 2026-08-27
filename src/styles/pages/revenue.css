@@ -42,3 +42,9 @@
 .factor-row:nth-child(odd){background:#fafafa!important}
 .factor-row>a{width:112px;min-width:112px;max-width:112px;box-sizing:border-box;background:#fff!important;z-index:5}
 .factor-row:nth-child(odd)>a{background:#fafafa!important}
+.project-factor-table{overflow-x:auto;min-width:0;scrollbar-width:none;-ms-overflow-style:none}
+.project-factor-table::-webkit-scrollbar{display:none}
+.project-factor-table .factor-head,.project-factor-table .factor-row{grid-template-columns:112px repeat(5,70px);min-width:462px}
+.project-factor-table .factor-head span{white-space:nowrap}
+.project-factor-table .factor-head{color:#1a1a1a}
+.project-factor-table .factor-row>a{width:112px;min-width:112px;max-width:112px}
