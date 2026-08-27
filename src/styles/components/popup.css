@@ -1,4 +1,11 @@
 .organization-popup-body{left:50%!important;right:auto!important;width:min(100%,430px)!important;margin:0!important;transform:translateX(-50%)!important;background:transparent!important;border-radius:10px 10px 0 0;overflow:hidden}
+/* Keep Popup close feedback responsive while retaining a short transition. */
+.adm-popup,
+.adm-mask{--adm-motion-duration:120ms}
+.organization-popup-body section[aria-label="收费站选择"]{height:auto!important;max-height:calc(100vh - 24px);gap:16px}
+.organization-popup-body section[aria-label="收费站选择"] .organization-sheet-header button{width:36px;height:36px;font-size:26px;line-height:26px}
+.organization-popup-body section[aria-label="收费站选择"] .organization-sheet-header button{font-size:0;background:transparent url('/ZSRoad_mobile/assets/figma-organization-close.svg') center/10px 10px no-repeat}
+.organization-popup-body section[aria-label="收费站选择"] .organization-sheet-header button img{display:none}
 .organization-backdrop,.time-backdrop{z-index:var(--z-popup)}
 .organization-sheet{width:min(100%,430px);height:min(404px,calc(100vh - 24px));display:flex;flex-direction:column;gap:24px;padding:15px;background:#fff;border-radius:10px 10px 0 0;color:var(--text-primary)}
 .organization-sheet-header{display:flex;align-items:center;justify-content:space-between;min-height:26px}

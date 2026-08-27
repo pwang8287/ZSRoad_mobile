@@ -25,6 +25,8 @@
 .cost-composition-section.is-detail .cost-legend-row>span:nth-child(2){padding-left:18px}
 .cost-detail-section{margin-top:4px}.cost-detail-category-switch{display:inline-flex;align-items:center;gap:6px;color:var(--brand-primary)}.cost-detail-category-switch button{width:16px;height:24px;padding:0;color:var(--brand-primary);font-size:10px}.cost-detail-category-switch span{min-width:100px;text-align:center;font-size:13px}
 .cost-category-sheet{height:auto;max-height:300px;gap:16px}
+.cost-detail-category-switch span{cursor:pointer}
+.cost-detail-category-switch button{cursor:pointer}
 .cost-app:not(.is-project-company) .cost-category-trend{display:none}
 .cost-category-trend{width:100%;overflow:visible}
 .cost-category-trend .echart{width:100%;min-width:100%}

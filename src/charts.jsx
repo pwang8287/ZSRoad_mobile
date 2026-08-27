@@ -3,6 +3,7 @@ import { init, use } from 'echarts/core'
 import { BarChart, LineChart } from 'echarts/charts'
 import { DataZoomComponent, GridComponent, LegendComponent, TooltipComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
+import { Popup } from 'antd-mobile'
 
 use([BarChart, LineChart, DataZoomComponent, GridComponent, LegendComponent, TooltipComponent, CanvasRenderer])
 
@@ -140,6 +141,7 @@ export const ERevenueAnalysisBars = memo(RevenueAnalysisBars, sameRevenueChart)
 export function EProjectRevenueCharts() {
   const stationNames = ['桂林七星', '桂林象山', '灵川县道站', '桂林高新', '兴安城南站', '桂林北']
   const [stationIndex, setStationIndex] = useState(0)
+  const [stationOpen, setStationOpen] = useState(false)
   const station = stationNames[stationIndex]
   const line = (title, names, series, { percent = false, unit = '万元', headerRight } = {}) => {
     const axis = dynamicAxis(series.flatMap(item => item.data), percent ? 5 : 50)
@@ -158,7 +160,7 @@ export function EProjectRevenueCharts() {
   return <>
     {line('客货比趋势',['1月','2月','3月','4月','5月','6月'],[{name:'客货比',color:colors.primary,data:[10,14,23,10,16,13]},{name:'客货比(去年)',color:'#B8B8B8',data:[15,10,20,14,14,17]}],{ percent: true, unit: '%' })}
     <ERevenueAnalysisBars title="收费站出入口流量" names={stationNames} stacked series={[{name:'出口流量',data:[100,140,230,100,210,145],color:colors.primary},{name:'入口流量',data:[150,100,200,140,120,200],color:colors.teal}]}/>
-    {line('收费站出入口流量趋势',['1月','2月','3月','4月','5月','6月'],[{name:'客车流量',color:colors.primary,data:[100,140,230,100,130,210].map(value => value * (1 + stationIndex * .04))},{name:'货车流量',color:colors.teal,data:[150,100,200,140,100,225].map(value => value * (1 + stationIndex * .03))},{name:'客车流量(去年)',color:'#858B95',data:[158,122,121,176,122,185]},{name:'货车流量(去年)',color:'#C9CDD4',data:[190,150,110,132,165,152]}],{ unit: '万辆', headerRight: <div className="factor-category-switch project-station-switch"><button type="button" aria-label="上一个收费站" onClick={() => setStationIndex(index => (index - 1 + stationNames.length) % stationNames.length)}>◀</button><span className="factor-category-label">{station}</span><button type="button" aria-label="下一个收费站" onClick={() => setStationIndex(index => (index + 1) % stationNames.length)}>▶</button></div> })}
+    {line('收费站出入口流量趋势',['1月','2月','3月','4月','5月','6月'],[{name:'客车流量',color:colors.primary,data:[100,140,230,100,130,210].map(value => value * (1 + stationIndex * .04))},{name:'货车流量',color:colors.teal,data:[150,100,200,140,100,225].map(value => value * (1 + stationIndex * .03))},{name:'客车流量(去年)',color:'#858B95',data:[158,122,121,176,122,185]},{name:'货车流量(去年)',color:'#C9CDD4',data:[190,150,110,132,165,152]}],{ unit: '万辆', headerRight: <><div className="factor-category-switch project-station-switch"><button type="button" aria-label="上一个收费站" onClick={() => setStationIndex(index => (index - 1 + stationNames.length) % stationNames.length)}>◀</button><button type="button" className="factor-category-label" onClick={() => setStationOpen(true)}>{station}</button><button type="button" aria-label="下一个收费站" onClick={() => setStationIndex(index => (index + 1) % stationNames.length)}>▶</button></div><Popup visible={stationOpen} position="bottom" bodyClassName="organization-popup-body" onMaskClick={() => setStationOpen(false)} onClose={() => setStationOpen(false)}><section className="organization-sheet" role="dialog" aria-label="收费站选择"><div className="organization-sheet-header"><h2>收费站</h2><button type="button" aria-label="关闭收费站选择" onClick={() => setStationOpen(false)}>×</button></div><div className="organization-list">{stationNames.map((name, index) => <button type="button" className="organization-option" key={name} onClick={() => { setStationIndex(index); setStationOpen(false) }}><span>{name}</span>{station === name && <span className="project-station-selected">✓</span>}</button>)}</div></section></Popup></> })}
   </>
 }
 
