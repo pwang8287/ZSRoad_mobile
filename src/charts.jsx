@@ -223,6 +223,27 @@ export const ECostCategoryTrend = memo(function ECostCategoryTrend() {
   return <Chart option={option} height={320} />
 })
 
+export const ECostItemTrend = memo(function ECostItemTrend({ category }) {
+  const months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+  const seed = [...String(category)].reduce((total, character) => total + character.charCodeAt(0), 0)
+  const current = months.map((_, index) => Math.round(90 + seed % 55 + Math.sin((index + seed % 4) * 1.18) * 32 + index * 4))
+  const previous = months.map((_, index) => Math.round(105 + seed % 38 + Math.cos((index + seed % 5) * .92) * 27 + index * 3))
+  const axis = dynamicAxis([...current, ...previous], 50)
+  const option = {
+    animationDuration: 450,
+    grid: { left: 42, right: 10, top: 34, bottom: 78 },
+    legend: { bottom: 4, left: 'center', itemWidth: 14, itemHeight: 2, itemGap: 24, textStyle: { color: colors.text, fontSize: 12 }, data: ['当期','去年同期'] },
+    tooltip: { ...tooltip, axisPointer: { type: 'line' } },
+    xAxis: { type: 'category', data: months, boundaryGap: false, axisLine: { lineStyle: { color: colors.grid } }, axisTick: { show: false }, axisLabel: { color: colors.tertiary, fontSize: 11, rotate: 30, interval: 0 } },
+    yAxis: { type: 'value', min: 0, max: axis.max, interval: axis.interval, name: '万元', nameLocation: 'end', nameGap: 8, nameTextStyle: { color: colors.tertiary, fontSize: 11, align: 'right' }, axisLabel: { color: colors.tertiary, fontSize: 11, formatter: formatAxisNumber }, axisLine: { show: false }, axisTick: { show: false }, splitLine: { lineStyle: { color: colors.grid, type: 'dashed' } } },
+    series: [
+      { name: '当期', type: 'line', smooth: true, symbol: 'circle', symbolSize: 5, data: current, lineStyle: { color: colors.primary, width: 2 }, itemStyle: { color: colors.primary }, areaStyle: { color: 'rgba(3,108,255,.10)' } },
+      { name: '去年同期', type: 'line', smooth: true, symbol: 'circle', symbolSize: 5, data: previous, lineStyle: { color: '#8C96A6', width: 2 }, itemStyle: { color: '#8C96A6' } }
+    ]
+  }
+  return <Chart option={option} height={300} />
+})
+
 export const ECostDetailBars = memo(function ECostDetailBars({ category = '道路养护费用' } = {}) {
   const categoryData = {
     道路养护费用: { names: ['日常养护','专项养护','抢险养护','路损养护','预提养护费用','其他'], current: [100,140,230,100,130,120], previous: [150,100,200,140,100,142], color: '#036CFF' },

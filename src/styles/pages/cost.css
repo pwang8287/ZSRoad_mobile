@@ -103,6 +103,7 @@
   white-space:nowrap;
   line-height:20px;
 }
+.cost-detail-row>*:nth-child(2){text-align:right}
 .cost-detail-row button{
   display:flex;
   align-items:center;
@@ -119,9 +120,21 @@
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.cost-detail-row button span{flex:0 0 10px;text-align:center}
+.cost-detail-row button span{flex:0 0 12px;display:inline-flex;align-items:center;justify-content:center;height:20px;color:transparent;font-size:0;text-align:center}
+.cost-detail-row button span::before{content:"";display:block;width:6px;height:6px;border-right:1.5px solid var(--brand-primary);border-bottom:1.5px solid var(--brand-primary);transform:rotate(-45deg)}
+.cost-detail-row.expanded button span::before{transform:rotate(45deg) translate(-1px,-1px)}
 .cost-detail-sub>span:first-child{padding-left:18px;text-align:left;color:var(--text-primary)}
 .cost-detail-row .change-arrow{font-size:.75em;background:transparent!important}
+.cost-detail-table.has-trend-column .cost-detail-head,
+.cost-detail-table.has-trend-column .cost-detail-row{grid-template-columns:minmax(92px,1.35fr) minmax(66px,1fr) 48px 58px 40px}
+.cost-detail-table .cost-trend-view{display:inline-flex;align-items:center;justify-content:center;width:auto;min-width:36px;height:26px;margin:0 auto;padding:3px 2px;border:0;background:transparent;color:var(--brand-primary);font-size:12px;line-height:20px;white-space:nowrap;cursor:pointer}
+.cost-detail-table .cost-trend-view:active{opacity:.65}
+.cost-trend-modal-backdrop{position:fixed;z-index:var(--z-popup);inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.42)}
+.cost-trend-modal{width:min(100%,400px);overflow:hidden;padding:14px 10px 8px;background:#fff;border-radius:8px;box-shadow:0 12px 30px rgba(26,26,26,.2)}
+.cost-trend-modal header{height:34px;display:flex;align-items:center;justify-content:center;position:relative;padding:0 36px}
+.cost-trend-modal header h2{margin:0;overflow:hidden;color:var(--text-primary);font-size:17px;line-height:24px;font-weight:600;text-align:center;white-space:nowrap;text-overflow:ellipsis}
+.cost-trend-modal header button{position:absolute;right:0;top:0;display:grid;place-items:center;width:34px;height:34px;padding:0;border:0;background:transparent;color:var(--text-primary);cursor:pointer}
+.cost-trend-modal .echart{width:100%}
 
 /* Cost page-owned final rules. */
 .cost-page .cost-meta{display:flex;align-items:center}
@@ -130,3 +143,11 @@
 .cost-page .cost-detail-table{width:100%;overflow:hidden}
 .cost-page .cost-detail-head,
 .cost-page .cost-detail-row{display:grid;align-items:center}
+.cost-page .cost-detail-table.has-trend-column{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none}
+.cost-page .cost-detail-table.has-trend-column::-webkit-scrollbar{display:none}
+.cost-page .cost-detail-table.has-trend-column .cost-detail-head,
+.cost-page .cost-detail-table.has-trend-column .cost-detail-row{grid-template-columns:120px 90px 58px 72px 40px;column-gap:10px;width:420px;min-width:420px}
+.cost-page .cost-detail-table.has-trend-column .cost-detail-row>*:nth-child(2){text-align:right}
+.cost-page .cost-detail-table.has-trend-column .cost-detail-head>*:first-child,
+.cost-page .cost-detail-table.has-trend-column .cost-detail-row>*:first-child{position:sticky;left:0;z-index:2;background:inherit}
+.cost-page .cost-detail-table.has-trend-column .cost-detail-head>*:first-child{z-index:3;background:#dff1ff}
