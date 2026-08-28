@@ -6,6 +6,8 @@
 .organization-popup-body section[aria-label="收费站选择"] .organization-sheet-header button{width:36px;height:36px;font-size:26px;line-height:26px}
 .organization-popup-body section[aria-label="收费站选择"] .organization-sheet-header button{font-size:0;background:transparent url('/ZSRoad_mobile/assets/figma-organization-close.svg') center/10px 10px no-repeat}
 .organization-popup-body section[aria-label="收费站选择"] .organization-sheet-header button img{display:none}
+.organization-popup-body .factor-sheet{height:auto!important;max-height:calc(100vh - 24px);gap:16px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+.organization-popup-body .factor-sheet .organization-list{flex:0 1 auto}
 .organization-backdrop,.time-backdrop{z-index:var(--z-popup)}
 .organization-sheet{width:min(100%,430px);height:min(404px,calc(100vh - 24px));display:flex;flex-direction:column;gap:24px;padding:15px;background:#fff;border-radius:10px 10px 0 0;color:var(--text-primary)}
 .organization-sheet-header{display:flex;align-items:center;justify-content:space-between;min-height:26px}

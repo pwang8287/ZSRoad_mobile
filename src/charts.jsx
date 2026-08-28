@@ -121,7 +121,14 @@ function RevenueAnalysisBars({ title, names, series, unit = '万元', stacked = 
   const scale = period === '年累计' ? 1.18 : 1
   series = series.map(item => ({ ...item, data: item.data.map(value => Number(value) * scale) }))
   const axisValues = stacked
-    ? names.map((_, index) => series.reduce((total, item) => total + Number(item.data[index] || 0), 0))
+    ? names.flatMap((_, index) => {
+        const totals = series.reduce((groups, item) => {
+          const stack = item.name.includes('去年') ? 'previous' : 'current'
+          groups[stack] += Number(item.data[index] || 0)
+          return groups
+        }, { current: 0, previous: 0 })
+        return [totals.current, totals.previous]
+      })
     : series.flatMap(item => item.data)
   const axis = dynamicAxis(axisValues, 50)
   const interval = axis.interval
