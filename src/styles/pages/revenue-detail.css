@@ -12,12 +12,18 @@
 .revenue-detail-page .revenue-meta>span:nth-child(2){order:1;margin-left:0}
 .revenue-detail-page .revenue-meta .switch{order:3;height:27px}
 .revenue-detail-chart{margin:8px 0 10px}
-.revenue-detail-chart-heading{display:flex;align-items:center;justify-content:space-between;min-height:30px;margin:0 8px 0 9px}
+.revenue-detail-chart-heading{display:flex;align-items:flex-start;justify-content:space-between;min-height:30px;margin:0 8px 0 9px}
 .revenue-detail-chart-heading h2{position:relative;display:flex;align-items:center;flex:1;height:30px;margin:0;padding-left:10px;font-size:15px;line-height:21px}
+.project-revenue-extra .revenue-detail-chart-heading h2{white-space:nowrap}
 .revenue-detail-chart-heading h2::before{content:"";position:absolute;left:0;top:50%;width:2px;height:18px;transform:translateY(-50%);background:var(--brand-primary)}
 .factor-category-switch{display:inline-flex;align-items:center;gap:6px;color:var(--brand-primary);white-space:nowrap}
 .factor-category-switch button{width:16px;height:24px;padding:0;color:var(--brand-primary);font-size:10px;line-height:20px}
 .factor-category-switch .factor-category-label{width:auto;min-width:56px;font-size:14px;line-height:24px}
+.project-chart-period-switch{flex:none;margin-left:6px}
+.project-chart-controls{display:inline-flex;flex-direction:column;align-items:flex-end;justify-content:flex-start;gap:28px;flex:none;min-height:80px}
+.project-chart-controls .project-station-switch{margin-left:0}
+.project-chart-controls .project-station-switch{height:24px}
+@media (max-width:380px){.project-chart-controls{gap:28px}.project-station-switch .factor-category-label{min-width:48px;font-size:12px}}
 .revenue-detail-ranking{margin-top:10px}
 .revenue-detail-table{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;font-size:12px;counter-reset:detail-rank}
 .revenue-detail-table::-webkit-scrollbar{display:none}

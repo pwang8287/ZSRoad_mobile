@@ -115,9 +115,11 @@ function ECompanyBarsView({ data, period = '当月', names: namesProp } = {}) {
 }
 export const ECompanyBars = memo(ECompanyBarsView)
 
-function RevenueAnalysisBars({ title, names, series, unit = '万元', stacked = false, headerRight }) {
+function RevenueAnalysisBars({ title, names, series, unit = '万元', stacked = false, headerRight, period = '当月' }) {
   // Stacked bars need an axis based on the category totals, otherwise the
   // combined height can exceed the scale and be visually clipped.
+  const scale = period === '年累计' ? 1.18 : 1
+  series = series.map(item => ({ ...item, data: item.data.map(value => Number(value) * scale) }))
   const axisValues = stacked
     ? names.map((_, index) => series.reduce((total, item) => total + Number(item.data[index] || 0), 0))
     : series.flatMap(item => item.data)
@@ -131,7 +133,7 @@ function RevenueAnalysisBars({ title, names, series, unit = '万元', stacked = 
   return <section className="revenue-detail-chart"><div className="revenue-detail-chart-heading"><h2>{title}</h2>{headerRight}</div><Chart option={option} height={300} /></section>
 }
 
-const sameRevenueChart = (prev, next) => prev.title === next.title && prev.unit === next.unit && prev.stacked === next.stacked && prev.headerRight === next.headerRight && prev.names.join('|') === next.names.join('|') && prev.series.length === next.series.length && prev.series.every((item, index) => {
+const sameRevenueChart = (prev, next) => prev.title === next.title && prev.unit === next.unit && prev.period === next.period && prev.stacked === next.stacked && prev.headerRight === next.headerRight && prev.names.join('|') === next.names.join('|') && prev.series.length === next.series.length && prev.series.every((item, index) => {
   const nextItem = next.series[index]
   return item.name === nextItem.name && item.color === nextItem.color && item.data.join(',') === nextItem.data.join(',')
 })
@@ -142,8 +144,14 @@ export function EProjectRevenueCharts() {
   const stationNames = ['桂林七星', '桂林象山', '灵川县道站', '桂林高新', '兴安城南站', '桂林北']
   const [stationIndex, setStationIndex] = useState(0)
   const [stationOpen, setStationOpen] = useState(false)
+  const [ratioPeriod, setRatioPeriod] = useState('当月')
+  const [stationBarsPeriod, setStationBarsPeriod] = useState('当月')
+  const [stationTrendPeriod, setStationTrendPeriod] = useState('当月')
   const station = stationNames[stationIndex]
-  const line = (title, names, series, { percent = false, unit = '万元', headerRight } = {}) => {
+  const periodSwitch = (value, onChange, label) => <div className="switch ranking-period-switch project-chart-period-switch" aria-label={`${label}周期`}><button type="button" className={value === '当月' ? 'on' : ''} onClick={() => onChange('当月')}>当月</button><button type="button" className={value === '年累计' ? 'on' : ''} onClick={() => onChange('年累计')}>年累计</button></div>
+  const line = (title, names, series, { percent = false, unit = '万元', headerRight, period = '当月' } = {}) => {
+    const scale = period === '年累计' ? 1.18 : 1
+    series = series.map(item => ({ ...item, data: item.data.map(value => Number(value) * scale) }))
     const axis = dynamicAxis(series.flatMap(item => item.data), percent ? 5 : 50)
     const option = {
       animationDuration: 500,
@@ -158,9 +166,9 @@ export function EProjectRevenueCharts() {
     return <section className="revenue-detail-chart project-revenue-extra"><div className="revenue-detail-chart-heading"><h2>{title}</h2>{headerRight}</div><Chart option={option} height={335}/></section>
   }
   return <>
-    {line('客货比趋势',['1月','2月','3月','4月','5月','6月'],[{name:'客货比',color:colors.primary,data:[10,14,23,10,16,13]},{name:'客货比(去年)',color:'#B8B8B8',data:[15,10,20,14,14,17]}],{ percent: true, unit: '%' })}
-    <ERevenueAnalysisBars title="收费站出入口流量" names={stationNames} stacked series={[{name:'出口流量',data:[100,140,230,100,210,145],color:colors.primary},{name:'入口流量',data:[150,100,200,140,120,200],color:colors.teal}]}/>
-    {line('收费站出入口流量趋势',['1月','2月','3月','4月','5月','6月'],[{name:'客车流量',color:colors.primary,data:[100,140,230,100,130,210].map(value => value * (1 + stationIndex * .04))},{name:'货车流量',color:colors.teal,data:[150,100,200,140,100,225].map(value => value * (1 + stationIndex * .03))},{name:'客车流量(去年)',color:'#858B95',data:[158,122,121,176,122,185]},{name:'货车流量(去年)',color:'#C9CDD4',data:[190,150,110,132,165,152]}],{ unit: '万辆', headerRight: <><div className="factor-category-switch project-station-switch"><button type="button" aria-label="上一个收费站" onClick={() => setStationIndex(index => (index - 1 + stationNames.length) % stationNames.length)}>◀</button><button type="button" className="factor-category-label" onClick={() => setStationOpen(true)}>{station}</button><button type="button" aria-label="下一个收费站" onClick={() => setStationIndex(index => (index + 1) % stationNames.length)}>▶</button></div><Popup visible={stationOpen} position="bottom" bodyClassName="organization-popup-body" onMaskClick={() => setStationOpen(false)} onClose={() => setStationOpen(false)}><section className="organization-sheet" role="dialog" aria-label="收费站选择"><div className="organization-sheet-header"><h2>收费站</h2><button type="button" aria-label="关闭收费站选择" onClick={() => setStationOpen(false)}>×</button></div><div className="organization-list">{stationNames.map((name, index) => <button type="button" className="organization-option" key={name} onClick={() => { setStationIndex(index); setStationOpen(false) }}><span>{name}</span>{station === name && <span className="project-station-selected">✓</span>}</button>)}</div></section></Popup></> })}
+    {line('客货比趋势',['1月','2月','3月','4月','5月','6月'],[{name:'客货比',color:colors.primary,data:[10,14,23,10,16,13]},{name:'客货比(去年)',color:'#B8B8B8',data:[15,10,20,14,14,17]}],{ percent: true, unit: '%', period: ratioPeriod, headerRight: periodSwitch(ratioPeriod, setRatioPeriod, '客货比趋势') })}
+    <ERevenueAnalysisBars title="收费站出入口流量" names={stationNames} period={stationBarsPeriod} headerRight={periodSwitch(stationBarsPeriod, setStationBarsPeriod, '收费站出入口流量')} stacked series={[{name:'出口流量',data:[100,140,230,100,210,145],color:colors.primary},{name:'入口流量',data:[150,100,200,140,120,200],color:colors.teal}]}/>
+    {line('收费站出入口流量趋势',['1月','2月','3月','4月','5月','6月'],[{name:'客车流量',color:colors.primary,data:[100,140,230,100,130,210].map(value => value * (1 + stationIndex * .04))},{name:'货车流量',color:colors.teal,data:[150,100,200,140,100,225].map(value => value * (1 + stationIndex * .03))},{name:'客车流量(去年)',color:'#858B95',data:[158,122,121,176,122,185]},{name:'货车流量(去年)',color:'#C9CDD4',data:[190,150,110,132,165,152]}],{ unit: '万辆', period: stationTrendPeriod, headerRight: <><div className="project-chart-controls">{periodSwitch(stationTrendPeriod, setStationTrendPeriod, '收费站出入口流量趋势')}<div className="factor-category-switch project-station-switch"><button type="button" aria-label="上一个收费站" onClick={() => setStationIndex(index => (index - 1 + stationNames.length) % stationNames.length)}>◀</button><button type="button" className="factor-category-label" onClick={() => setStationOpen(true)}>{station}</button><button type="button" aria-label="下一个收费站" onClick={() => setStationIndex(index => (index + 1) % stationNames.length)}>▶</button></div></div><Popup visible={stationOpen} position="bottom" bodyClassName="organization-popup-body" onMaskClick={() => setStationOpen(false)} onClose={() => setStationOpen(false)}><section className="organization-sheet" role="dialog" aria-label="收费站选择"><div className="organization-sheet-header"><h2>收费站</h2><button type="button" aria-label="关闭收费站选择" onClick={() => setStationOpen(false)}>×</button></div><div className="organization-list">{stationNames.map((name, index) => <button type="button" className="organization-option" key={name} onClick={() => { setStationIndex(index); setStationOpen(false) }}><span>{name}</span>{station === name && <span className="project-station-selected">✓</span>}</button>)}</div></section></Popup></> })}
   </>
 }
 
